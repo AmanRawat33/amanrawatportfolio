@@ -13,6 +13,7 @@ const Home = () => {
   const audioRef = useRef(new Audio(sakura));
   audioRef.current.volume = 0.5;
   audioRef.current.loop = true;
+
   const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
@@ -23,7 +24,9 @@ const Home = () => {
     } else {
       audioRef.current.pause();
     }
-    return () => audioRef.current.pause();
+    return () => {
+      audioRef.current.pause();
+    };
   }, [isPlayingMusic]);
 
   const adjustIslandForScreenSize = () => {
@@ -39,7 +42,8 @@ const Home = () => {
     return [screenScale, screenPosition];
   };
 
-  const [islandScale, islandPosition, islandRotation] = adjustIslandForScreenSize();
+  const [islandScale, islandPosition, islandRotation] =
+    adjustIslandForScreenSize();
   const [planeScale, planePosition] = adjustPlaneForScreenSize();
 
   return (
@@ -52,11 +56,17 @@ const Home = () => {
           isRotating ? "cursor-grabbing" : "cursor-grab"
         }`}
         camera={{ near: 0.1, far: 1000 }}
+        onTouchStart={() => setIsRotating(true)}
+        onTouchEnd={() => setIsRotating(false)}
       >
         <Suspense fallback={<Loader />}>
           <directionalLight position={[1, 1, 1]} intensity={2} />
           <ambientLight intensity={0.5} />
-          <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />
+          <hemisphereLight
+            skyColor="#b1e1ff"
+            groundColor="#000000"
+            intensity={1}
+          />
           <Bird />
           <Sky isRotating={isRotating} />
           <Island
