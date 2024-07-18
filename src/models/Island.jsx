@@ -18,12 +18,14 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
     setIsRotating(true);
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     lastX.current = clientX;
+    console.log("Pointer down:", clientX);
   };
 
   const handlePointerUp = (e) => {
     e.stopPropagation();
     e.preventDefault();
     setIsRotating(false);
+    console.log("Pointer up");
   };
 
   const handlePointerMove = (e) => {
@@ -35,6 +37,7 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
       islandRef.current.rotation.y += delta * 0.01 * Math.PI;
       lastX.current = clientX;
       rotationSpeed.current = delta * 0.01 * Math.PI;
+      console.log("Pointer move:", clientX, delta);
     }
   };
 
