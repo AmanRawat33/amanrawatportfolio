@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { a } from "@react-spring/three";
@@ -18,14 +18,12 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
     setIsRotating(true);
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     lastX.current = clientX;
-    console.log("Pointer down:", clientX);
   };
 
   const handlePointerUp = (e) => {
     e.stopPropagation();
     e.preventDefault();
     setIsRotating(false);
-    console.log("Pointer up");
   };
 
   const handlePointerMove = (e) => {
@@ -37,7 +35,6 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
       islandRef.current.rotation.y += delta * 0.01 * Math.PI;
       lastX.current = clientX;
       rotationSpeed.current = delta * 0.01 * Math.PI;
-      console.log("Pointer move:", clientX, delta);
     }
   };
 
@@ -104,7 +101,14 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
     };
-  }, [gl]);
+  }, [
+    gl,
+    handlePointerDown,
+    handlePointerUp,
+    handlePointerMove,
+    handleKeyDown,
+    handleKeyUp,
+  ]);
 
   return (
     <a.group ref={islandRef} {...props}>
