@@ -1,2 +1,0 @@
-# amanrawatportfolio
-My portfolio website
