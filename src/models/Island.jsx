@@ -16,7 +16,6 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
     e.stopPropagation();
     e.preventDefault();
     setIsRotating(true);
-
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     lastX.current = clientX;
   };
@@ -33,7 +32,6 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
     if (isRotating) {
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const delta = (clientX - lastX.current) / viewport.width;
-
       islandRef.current.rotation.y += delta * 0.01 * Math.PI;
       lastX.current = clientX;
       rotationSpeed.current = delta * 0.01 * Math.PI;
@@ -44,7 +42,7 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
     if (e.key === "ArrowLeft") {
       setIsRotating(true);
       islandRef.current.rotation.y += 0.01 * Math.PI;
-      rotationSpeed.current = 0.0125
+      rotationSpeed.current = 0.0125;
     } else if (e.key === "ArrowRight") {
       setIsRotating(true);
       islandRef.current.rotation.y -= 0.01 * Math.PI;
@@ -95,6 +93,7 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
     canvas.addEventListener("pointermove", handlePointerMove);
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
+
     return () => {
       canvas.removeEventListener("pointerdown", handlePointerDown);
       canvas.removeEventListener("pointerup", handlePointerUp);
