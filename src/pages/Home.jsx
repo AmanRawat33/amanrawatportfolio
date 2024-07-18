@@ -13,7 +13,6 @@ const Home = () => {
   const audioRef = useRef(new Audio(sakura));
   audioRef.current.volume = 0.5;
   audioRef.current.loop = true;
-
   const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
@@ -24,9 +23,7 @@ const Home = () => {
     } else {
       audioRef.current.pause();
     }
-    return () => {
-      audioRef.current.pause();
-    };
+    return () => audioRef.current.pause();
   }, [isPlayingMusic]);
 
   const adjustIslandForScreenSize = () => {
@@ -56,8 +53,6 @@ const Home = () => {
           isRotating ? "cursor-grabbing" : "cursor-grab"
         }`}
         camera={{ near: 0.1, far: 1000 }}
-        onTouchStart={() => setIsRotating(true)}
-        onTouchEnd={() => setIsRotating(false)}
       >
         <Suspense fallback={<Loader />}>
           <directionalLight position={[1, 1, 1]} intensity={2} />
